@@ -18,6 +18,8 @@ processBookAt filePath = do
   let contentLineCount = length $ lines content
   putStrLn $ "Number of Lines: " ++ show contentLineCount
 
+  -- TODO (#1) Implement the most frequent words
+  
 
 main :: IO ()
 main = do
