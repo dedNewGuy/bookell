@@ -1,9 +1,20 @@
 module Main where
 
+import Data.List
 import Data.List.Split
+
+import Data.Char
 
 import System.Environment
 import System.Exit
+
+wordsAtLine :: String -> [String]
+wordsAtLine line = words $ map (\x -> if isAlpha x then x else ' ') line
+
+formatWordCount :: (String, Int) -> String
+formatWordCount ls = do
+  let (word, count) = ls
+  word ++ " => " ++ show count
 
 processBookAt :: FilePath -> IO ()
 processBookAt filePath = do
@@ -14,12 +25,17 @@ processBookAt filePath = do
   -- Read the file content
   content <- readFile filePath
 
+  let contentByLine = lines content
+
   -- Print the content line count
-  let contentLineCount = length $ lines content
+  let contentLineCount = length $ contentByLine
   putStrLn $ "Number of Lines: " ++ show contentLineCount
 
-  -- TODO (#1) Implement the most frequent words
-  -- TODO (#2) Implement the least frequent words  
+  let wordList = concat $ map (\x -> wordsAtLine x) contentByLine
+  let wordCount = map (\x -> (x !! 0, length x)) $ group $ sort wordList
+  putStrLn "Word frequency"
+  mapM_ (\x -> putStrLn $ formatWordCount x) wordCount
+  
 
 main :: IO ()
 main = do
