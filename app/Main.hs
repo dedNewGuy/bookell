@@ -19,7 +19,7 @@ processBookAt filePath = do
   putStrLn $ "Number of Lines: " ++ show contentLineCount
 
   -- TODO (#1) Implement the most frequent words
-  
+  -- TODO (#2) Implement the least frequent words  
 
 main :: IO ()
 main = do
