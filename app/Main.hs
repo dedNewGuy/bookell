@@ -1,4 +1,20 @@
 module Main where
 
+import System.Environment
+import System.Exit
+
+processBookAt :: FilePath -> IO ()
+processBookAt filePath = do
+  content <- readFile filePath
+  let contentLength = length $ lines content
+  print contentLength
+
 main :: IO ()
-main = putStrLn "Hello, Haskell!"
+main = do
+  args <- getArgs
+
+  case args of
+    [filePath] -> processBookAt filePath
+    _ -> do
+      putStrLn "Usage: bookell <filepath>"
+      exitFailure
